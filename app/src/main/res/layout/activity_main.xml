@@ -1,0 +1,96 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="16dp">
+
+    <!-- Фоновое изображение с правильным масштабированием -->
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Полупрозрачный оверлей -->
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#80000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Заголовок -->
+    <TextView
+        android:id="@+id/TitleText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:shadowColor="#80000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:text="@string/Hello"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Описание поиска -->
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/search"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/TitleText"
+        app:layout_constraintStart_toStartOf="@id/TitleText"
+        app:layout_constraintTop_toBottomOf="@id/TitleText" />
+
+    <!-- Поле поиска -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:imeOptions="actionSearch"
+        android:inputType="textCapSentences|textAutoCorrect"
+        android:background="@drawable/search_view_background"
+        android:alpha="0.9"
+        android:queryHint="@string/search_hint"
+        app:iconifiedByDefault="false"
+        app:queryBackground="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="@id/textView2"
+        app:layout_constraintStart_toStartOf="@id/textView2"
+        app:layout_constraintTop_toBottomOf="@id/textView2"
+        app:searchHintIcon="@null"
+    style="@style/SearchViewStyle"/>
+
+    <!-- Список результатов -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="#CCFFFFFF"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/searchView2"
+        app:layout_constraintStart_toStartOf="@id/searchView2"
+        app:layout_constraintTop_toBottomOf="@id/searchView2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

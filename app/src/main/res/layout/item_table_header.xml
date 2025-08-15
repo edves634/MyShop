@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#DDDDDD"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:weightSum="5.5">
+
+    <TextView
+        android:id="@+id/header_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="@string/name"
+        android:gravity="start|center_vertical"
+        android:singleLine="true"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:id="@+id/header_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:text="@string/price"
+        android:gravity="start|center_vertical"
+        android:singleLine="true"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:id="@+id/header_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="@string/category"
+        android:gravity="start|center_vertical"
+        android:singleLine="true"
+        android:ellipsize="end"/>
+</LinearLayout>

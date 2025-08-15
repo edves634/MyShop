@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Основное изображение -->
+    <item>
+        <bitmap
+            android:src="@drawable/background"
+            android:gravity="center|fill" />
+    </item>
+
+    <!-- Полупрозрачный оверлей -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#80000000" /><!-- Черный с 50% прозрачностью -->
+        </shape>
+    </item>
+</layer-list>

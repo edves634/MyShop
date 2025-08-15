@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyShop</string>
+    <string name="new_products">Новые товары в наличии!</string>
+    <string name="resume">Продолжить</string>
+    <string name="search">Вы можете найти товар по поиску</string>
+    <string name="Hello">Добро пожаловать в наш магазин</string>
+    <string name="name">Название</string>
+    <string name="price">Цена</string>
+    <string name="category">Категория</string>
+    <string name="search_hint">Начните вводить текст</string>
+</resources>

@@ -1,4 +1,4 @@
-package com.example.myshop
+package com.example.myshop.data.presentation.main.adapter
 
 import android.graphics.Color
 import android.graphics.Typeface
@@ -9,6 +9,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myshop.R
+import com.example.myshop.data.local.model.Product
 import com.example.myshop.databinding.ItemProductBinding
 import com.example.myshop.databinding.ItemTableHeaderBinding
 
@@ -21,14 +23,13 @@ class ProductAdapter(
         private const val TYPE_PRODUCT = 1
     }
 
-    // Текущее состояние сортировки (столбец и направление)
-    private var currentSortColumn: String = "name"
-    private var currentSortAscending: Boolean = false
+    private var sortColumn: String = "name"
+    private var sortAscending: Boolean = false
 
     fun updateSortParams(column: String, ascending: Boolean) {
-        currentSortColumn = column
-        currentSortAscending = ascending
-        notifyItemChanged(0) // Обновляем только заголовок таблицы
+        sortColumn = column
+        sortAscending = ascending
+        notifyItemChanged(0)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -53,8 +54,8 @@ class ProductAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is HeaderViewHolder -> holder.bind() // Заголовок таблицы
-            is ProductItemViewHolder -> holder.bind(getItem(position) as Product) // Элемент продукта
+            is HeaderViewHolder -> holder.bind()
+            is ProductItemViewHolder -> holder.bind(getItem(position) as Product)
         }
     }
 
@@ -62,7 +63,6 @@ class ProductAdapter(
         return if (position == 0) TYPE_HEADER else TYPE_PRODUCT
     }
 
-    // ViewHolder для строки продукта
     inner class ProductItemViewHolder(private val binding: ItemProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -75,7 +75,6 @@ class ProductAdapter(
         }
     }
 
-    // ViewHolder для заголовка таблицы
     inner class HeaderViewHolder(
         private val binding: ItemTableHeaderBinding,
         private val sortCallback: (String) -> Unit
@@ -92,27 +91,23 @@ class ProductAdapter(
         }
 
         private fun setupColumn(textView: TextView, columnName: String) {
-            // Определяем ресурс иконки и цвет
-            val (iconRes, iconColor) = if (currentSortColumn == columnName) {
-                // Активный столбец - черная стрелка
-                val resId = if (currentSortAscending) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
-                Pair(resId, Color.BLACK)
-            } else {
-                // Неактивный столбец - серая стрелка вниз
-                Pair(R.drawable.ic_arrow_down, Color.GRAY)
+            val isActive = sortColumn == columnName
+            val iconRes = when {
+                !isActive -> R.drawable.ic_arrow_down
+                sortAscending -> R.drawable.ic_arrow_up
+                else -> R.drawable.ic_arrow_down
             }
 
-            // Устанавливаем иконку справа от текста
-            val drawable = ContextCompat.getDrawable(textView.context, iconRes)
-            drawable?.setTint(iconColor) // Применяем цвет к иконке
-            textView.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+            val color = if (isActive) Color.BLACK else Color.GRAY
+            val typeface = if (isActive) Typeface.BOLD else Typeface.NORMAL
 
-            // Устанавливаем стиль текста
-            textView.setTextColor(Color.BLACK)
-            textView.setTypeface(
-                null,
-                if (currentSortColumn == columnName) Typeface.BOLD else Typeface.NORMAL
-            )
+            val drawable = ContextCompat.getDrawable(textView.context, iconRes)?.apply {
+                setTint(color)
+            }
+
+            textView.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+            textView.setTextColor(color)
+            textView.setTypeface(null, typeface)
         }
     }
 

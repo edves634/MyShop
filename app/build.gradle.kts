@@ -1,7 +1,9 @@
+import com.android.build.api.dsl.Packaging
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt") // Обработчик аннотаций для Room
+    id("kotlin-kapt")
 }
 
 android {
@@ -37,6 +39,36 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    testOptions {
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+
+    // Добавьте этот блок для решения проблемы с дублирующимися файлами
+    fun Packaging.() {
+        resources {
+            excludes += setOf(
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md",
+                "META-INF/LICENSE.txt",
+                "META-INF/NOTICE.md",
+                "META-INF/NOTICE.txt",
+                "META-INF/license.txt",
+                "META-INF/notice.txt",
+                "META-INF/ASL2.0",
+                "META-INF/*.md",
+                "META-INF/*.txt",
+                "META-INF/AL2.0",
+                "META-INF/LGPL2.1"
+            )
+            pickFirsts += setOf(
+                "META-INF/io.netty.versions.properties",
+                "META-INF/INDEX.LIST"
+            )
+        }
+    }
 }
 
 dependencies {
@@ -47,24 +79,53 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.recyclerview)
-
-    // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.filament.android)
-    kapt(libs.androidx.room.compiler) // Важно: kapt вместо annotationProcessor
+    implementation(libs.androidx.runner)
+
+    // Room
+    kapt(libs.androidx.room.compiler)
 
     // Lifecycle
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-
-    // Kotlin
     implementation(libs.androidx.fragment.ktx)
+
+    // Coroutines
     implementation(libs.kotlinx.coroutines.android)
 
-    // Тестирование
+    // UI
+    implementation(libs.androidx.ui.desktop)
+
+    // Тестирование (unit tests)
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.test.ext.junit)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.truth)
+    testImplementation(libs.byte.buddy)
+    testImplementation(kotlin("test"))
+
+    // Тестирование (instrumentation tests)
+    androidTestImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.core)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.androidx.rules)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.room.testing)
+    debugImplementation(libs.androidx.fragment.testing)
+
+    // Test orchestrator
+    androidTestUtil(libs.androidx.orchestrator)
+
+    // Уберите эту строку, так как она вызывает конфликт
+    // androidTestImplementation(libs.junit.jupiter)
 }

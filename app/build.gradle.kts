@@ -46,7 +46,7 @@ android {
         }
     }
 
-    // Добавьте этот блок для решения проблемы с дублирующимися файлами
+
     fun Packaging.() {
         resources {
             excludes += setOf(
@@ -126,6 +126,5 @@ dependencies {
     // Test orchestrator
     androidTestUtil(libs.androidx.orchestrator)
 
-    // Уберите эту строку, так как она вызывает конфликт
-    // androidTestImplementation(libs.junit.jupiter)
+
 }

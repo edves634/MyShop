@@ -6,7 +6,7 @@
     android:paddingHorizontal="16dp"
     android:paddingTop="16dp">
 
-    <!-- Фоновое изображение с правильным масштабированием -->
+    <!-- Фоновое изображение -->
     <ImageView
         android:id="@+id/backgroundImage"
         android:layout_width="0dp"
